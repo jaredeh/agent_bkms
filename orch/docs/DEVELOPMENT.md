@@ -39,7 +39,8 @@ The project's default is in `.orch.json`.
 | `[done]` | Shipped with the gate green; pruned from the roadmap |
 
 When a tranche ships, prune its steps from `ROADMAP.md`. Detail lives in
-git, `docs/LOG.md` and the tests that pin the behaviour.
+git, `docs/LOG.md`, the tests that pin the behaviour, and the local step
+report in `docs/reports/` (recap plus the assumptions made).
 
 ## Roadmap shape
 

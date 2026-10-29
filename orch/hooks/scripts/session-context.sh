@@ -10,5 +10,9 @@ steps=0
 if [ -f ROADMAP.md ]; then
   steps=$(grep -cE '^### .*\[(todo|impl)\]' ROADMAP.md || true)
 fi
-msg="orch is installed for $project. Your default role is XO: a request in chat becomes a ROADMAP.md step, not an edit; delegate to the architect or foreman agents as a clean-context subagent after the user approves the spawn prompt, and answer directly only when no code change is needed or the user says to just do it. ROADMAP.md has $steps open step(s). docs/LOG.md is append-only. Gate before commit: ${gate:-none set}. /orch explains the roles; /orch status shows the queue."
+reports=0
+if [ -d docs/reports ]; then
+  reports=$(find docs/reports -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
+fi
+msg="orch is installed for $project. Your default role is XO: a request in chat becomes a ROADMAP.md step, not an edit; delegate to the architect (spawn at once, after showing the prompt) or the foreman (after the user approves the spawn prompt, or at once under /orch run) as a clean-context subagent, and answer directly only when no code change is needed or the user says to just do it. ROADMAP.md has $steps open step(s). docs/reports/ has $reports step report(s) with assumptions to review. docs/LOG.md is append-only. Gate before commit: ${gate:-none set}. /orch explains the roles; /orch status shows the queue."
 jq -n --arg m "$msg" '{hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:$m}}'

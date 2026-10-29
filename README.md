@@ -15,10 +15,11 @@ append-only log, and let hooks enforce the mechanical rules.
 Then, in a repo:
 
 ```
-/orch init          # .orch.json, ROADMAP.md (gitignored), docs/LOG.md, AGENTS.md, CLAUDE.md lines
+/orch init          # .orch.json, ROADMAP.md and docs/reports/ (gitignored), docs/LOG.md, AGENTS.md, CLAUDE.md lines
 /orch               # the roles, and what the session does next
-/orch plan <ask>    # draft the ARCHITECT spawn; wait for approval; spawn
-/orch build T1 T2   # draft the FOREMAN spawn for accepted steps
+/orch plan <ask>    # draft the ARCHITECT spawn; show it; spawn at once
+/orch build T1 T2   # draft the FOREMAN spawn for accepted steps; wait for approval; spawn
+/orch run <ask>     # plan then build, no approval stops; defaults taken, reported at the end
 /orch status        # the queue and the last log entries
 ```
 
@@ -28,7 +29,7 @@ Then, in a repo:
 |---|---|
 | `orch/agents/` | `architect` (plans, Opus), `foreman` (builds, Opus), `implementer` (one step, Sonnet), `recon` (read-only, Sonnet). Models pinned per agent; override per spawn. |
 | `orch/skills/orch/` | the `/orch` command: init, status, plan, build, and the XO contract |
-| `orch/hooks/` | the gate runs before every `git commit` and blocks on failure; `docs/LOG.md` is append-only; `ROADMAP.md` is never staged; a session-start reminder of the role and the queue |
+| `orch/hooks/` | the gate runs before every `git commit` and blocks on failure; `docs/LOG.md` is append-only; `ROADMAP.md` and `docs/reports/` are never staged; a session-start reminder of the role and the queue |
 | `orch/docs/` | `ROLES.md`, `DEVELOPMENT.md`: the contracts and the discipline |
 | `orch/templates/` | what `/orch init` writes into a repo, including `.grok/agents/` for Grok |
 
@@ -52,6 +53,11 @@ and the two-round correction cap are unchanged. What moved:
 - Plan mode is for XO's direct work; the Workflow tool is an option for
   FOREMAN fan-out when the user opts in; the memory directory is the
   agent's notes, not the project log.
+- **Step reports** (new): every built step leaves
+  `docs/reports/<date>-<id>-<slug>.md`, gitignored, with a recap for a
+  person and the assumptions made along the way, each as context,
+  question, decision, alternatives and confidence. The list you used to
+  have to ask for.
 
 What's still prose, because only a model can judge it: don't invent
-scope, cap corrective rounds, show the prompt and wait.
+scope, cap corrective rounds, show the prompt, and wait before building.
