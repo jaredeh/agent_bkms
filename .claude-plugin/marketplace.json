@@ -5,7 +5,7 @@
   "plugins": [
     {
       "name": "orch",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "description": "Plan in a clean context, execute from a written queue, keep an append-only log. Three roles, four agents, three hooks, one /orch command.",
       "author": { "name": "Jared Hulbert" },
       "source": "./orch"

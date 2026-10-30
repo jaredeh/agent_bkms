@@ -1,6 +1,6 @@
 {
   "name": "orch",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "XO / ARCHITECT / FOREMAN orchestration: plan in a clean context, execute from a written queue, keep an append-only log. Agents, hooks and /orch.",
   "author": { "name": "Jared Hulbert" }
 }
